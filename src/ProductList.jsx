@@ -296,8 +296,9 @@ function ProductList({ onHomeClick }) {
                       backgroundColor: "red",
                       color: "white",
                       borderRadius: "50%",
-                      padding: "5px 5px",
+                      padding: "7px 10px",
                       fontSize: "14px",
+                      textAlign: "center"
                     }}
                   >
                     {calculateTotalQuantity()}
