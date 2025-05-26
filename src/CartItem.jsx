@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeItem, updateQuantity } from "../src/CartSlice"; // Adjust path as needed
-import './CartItem.css';
+import "./CartItem.css";
 
 const CartItem = ({ onContinueShopping }) => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -15,7 +15,9 @@ const CartItem = ({ onContinueShopping }) => {
   // Handle decrement
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
-      dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+      dispatch(
+        updateQuantity({ name: item.name, quantity: item.quantity - 1 })
+      );
     } else {
       dispatch(removeItem(item.name));
     }
@@ -59,31 +61,40 @@ const CartItem = ({ onContinueShopping }) => {
         <p>Your cart is empty.</p>
       ) : (
         <>
-        <div className="cart-items-wrapper">
-          {cartItems.map((item) => (
-            <div className="cart-item" key={item.name}>
-              <img src={item.image} alt={item.name} className="cart-item-image" />
-              <div className="cart-item-details">
-                <h3>{item.name}</h3>
-                <p>Unit Price: ${item.cost}</p>
-                <div className="cart-quantity-controls">
-                  <button onClick={() => handleDecrement(item)}>-</button>
-                  <span>{item.quantity}</span>
-                  <button onClick={() => handleIncrement(item)}>+</button>
+          <div className="cart-items-wrapper">
+            {cartItems.map((item) => (
+              <div className="cart-item" key={item.name}>
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="cart-item-image"
+                />
+                <div className="cart-item-details">
+                  <h3>{item.name}</h3>
+                  <p>Unit Price: ${item.cost}</p>
+                  <div className="cart-quantity-controls">
+                    <button onClick={() => handleDecrement(item)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => handleIncrement(item)}>+</button>
+                  </div>
+                  <p>Subtotal: ${calculateSubtotal(item)}</p>
+                  <button
+                    onClick={() => handleRemove(item)}
+                    className="remove-button"
+                  >
+                    Remove
+                  </button>
                 </div>
-                <p>Subtotal: ${calculateSubtotal(item)}</p>
-                <button onClick={() => handleRemove(item)} className="remove-button">
-                  Remove
-                </button>
               </div>
-            </div>
-          ))}
+            ))}
 
-          <div className="cart-total">
-            <h3>Total: ${calculateTotalAmount()}</h3>
-            <button onClick={handleContinueShopping}>Continue Shopping</button>
-            <button onClick={handleCheckoutShopping}>Checkout</button>
-          </div>
+            <div className="cart-total">
+              <h3>Total: ${calculateTotalAmount()}</h3>
+              <button onClick={handleContinueShopping}>
+                Continue Shopping
+              </button>
+              <button onClick={handleCheckoutShopping}>Checkout</button>
+            </div>
           </div>
         </>
       )}
@@ -92,5 +103,3 @@ const CartItem = ({ onContinueShopping }) => {
 };
 
 export default CartItem;
-
-

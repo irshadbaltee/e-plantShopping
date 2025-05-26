@@ -9,7 +9,7 @@ const cartSlice = createSlice({
     // Add item to cart
     addItem: (state, action) => {
       const { name, image, cost } = action.payload;
-      const existingItem = state.items.find(item => item.name === name);
+      const existingItem = state.items.find((item) => item.name === name);
       if (existingItem) {
         existingItem.quantity++;
       } else {
@@ -19,13 +19,13 @@ const cartSlice = createSlice({
 
     // Remove item from cart
     removeItem: (state, action) => {
-      state.items = state.items.filter(item => item.name !== action.payload);
+      state.items = state.items.filter((item) => item.name !== action.payload);
     },
 
     // Update item quantity
     updateQuantity: (state, action) => {
       const { name, quantity } = action.payload;
-      const itemToUpdate = state.items.find(item => item.name === name);
+      const itemToUpdate = state.items.find((item) => item.name === name);
       if (itemToUpdate) {
         itemToUpdate.quantity = quantity;
       }
