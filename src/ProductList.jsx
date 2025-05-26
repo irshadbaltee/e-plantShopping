@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import "./ProductList.css";
 import CartItem from "./CartItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "./CartSlice";
 
 function ProductList({ onHomeClick }) {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items); // Redux cart items
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false);
   const [addedToCart, setAddedToCart] = useState({});
+
+  // Calculate total quantity
+  const calculateTotalQuantity = () => {
+    return cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
+  };
 
   const plantsArray = [
     {
@@ -183,7 +189,7 @@ function ProductList({ onHomeClick }) {
     },
   ];
 
-  // Flatten the array to get all plant objects
+
   const allPlants = plantsArray.flatMap((category) => category.plants);
 
   const styleObj = {
@@ -262,7 +268,7 @@ function ProductList({ onHomeClick }) {
           </div>
           <div>
             <a href="#" onClick={handleCartClick} style={styleA}>
-              <h1 className="cart">
+              <h1 className="cart" style={{ position: "relative" }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 256 256"
@@ -280,6 +286,23 @@ function ProductList({ onHomeClick }) {
                     strokeWidth="2"
                   />
                 </svg>
+                {/* Show total items in cart */}
+                {calculateTotalQuantity() > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "0px",
+                      right: "0px",
+                      backgroundColor: "red",
+                      color: "white",
+                      borderRadius: "50%",
+                      padding: "5px 5px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {calculateTotalQuantity()}
+                  </span>
+                )}
               </h1>
             </a>
           </div>
